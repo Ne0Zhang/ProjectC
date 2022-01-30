@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public bool walk = true;
     public Animator animator;
     private CharacterController controller;
     private Rigidbody rb;
@@ -21,20 +22,22 @@ public class PlayerMovement : MonoBehaviour
 
     void Update() 
     {
-        float x = Input.GetAxisRaw("Horizontal");
-        float z = Input.GetAxisRaw("Vertical");
+        if (walk) {
+            float x = Input.GetAxisRaw("Horizontal");
+            float z = Input.GetAxisRaw("Vertical");
 
 
-        animator.SetFloat("SpeedX", x);
-        animator.SetFloat("SpeedZ", z);
+            animator.SetFloat("SpeedX", x);
+            animator.SetFloat("SpeedZ", z);
 
-        Vector3 direction = transform.right * x + transform.forward * z;
-        direction = Vector3.ClampMagnitude(direction, 1f);
+            Vector3 direction = transform.right * x + transform.forward * z;
+            direction = Vector3.ClampMagnitude(direction, 1f);
 
-        directionY -= gravity * Time.deltaTime;
+            directionY -= gravity * Time.deltaTime;
 
-        direction.y = directionY;
+            direction.y = directionY;
 
-        controller.Move(direction * moveSpeed * Time.deltaTime);
+            controller.Move(direction * moveSpeed * Time.deltaTime);
+        }
     }
 }
